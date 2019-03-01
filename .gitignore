@@ -8,8 +8,8 @@
 # testing
 /coverage
 
-# production 
-/build
+# Ignore in development 
+#/build
 
 # misc
 .DS_Store
@@ -23,7 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 
-#src/*
-#public/*
-#build/static/css/*.map
-#build/static/js/*.map
+#Ignore in production
+src/*
+public/*
+build/static/css/*.map
+build/static/js/*.map
