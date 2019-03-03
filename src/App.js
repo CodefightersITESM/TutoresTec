@@ -10,7 +10,8 @@ class App extends Component {
       email: '',
       password: '',
       confirmPassword: '',
-      action: "login"
+      action: "login",
+      username: ''
     };
   }
 
@@ -24,20 +25,45 @@ class App extends Component {
   }
 
   handleSignUp = () => {
-    const provider = firebase.auth.EmailAuthProvider();
     const auth = firebase.auth();
-    auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then((r) => {
-      console.log(r);
+    const database = firebase.database();
+    auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then((response) => {
+      console.log("Response: " + response);
+      console.log("Usuario: " + response.user);
+      const user = response.user;
+      console.log("User ID: " + user.uid);
+      console.log("Username: " + this.state.username);
+      console.log("User email: " + user.email);
+      const currUser = firebase.auth().currentUser;
+      if(currUser){
+        console.log("User logged in");
+      } else {
+        console.log("User not logged in");
+      }
+      database.ref(`Usuarios/${user.uid}`).set({
+        username:this.state.username,
+        email: user.email
+      });
+    }).catch((error) => {
+      alert(error);
+    }).then(() => {
+
     });
-    console.log(provider);
-    console.log(auth);
+  }
+
+  handleLogin = () => {
+    const auth = firebase.auth();
+    auth.signInWithEmailAndPassword(this.state.email, this.state.password).then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      alert(error);
+    });
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
-    console.log(e.target.value);
   }
 
 
@@ -47,12 +73,13 @@ class App extends Component {
         <div className="AuthContainer">
           <input placeholder="Correo" name="email" className="AuthComponent" onChange={this.handleChange} value={this.state.email}/>
           <input placeholder="Contraseña" name="password" type="password" className="AuthComponent" onChange={this.handleChange} value={this.state.password}/>
-          <button>Ingresar</button>
+          <button onClick={this.handleLogin}>Ingresar</button>
           </div>
     );
     } else {
       return (
         <div className="AuthContainer">
+        <input placeholder="Nombre" name="username" className="AuthComponent" onChange={this.handleChange} value={this.state.username}/>
         <input placeholder="Correo" name="email" className="AuthComponent" onChange={this.handleChange} value={this.state.email}/>
         <input placeholder="Contraseña" name="password" type="password" className="AuthComponent" onChange={this.handleChange} value={this.state.password}/>
         <input placeholder="Confirmar Contraseña" type="password" className="AuthComponent"/>
