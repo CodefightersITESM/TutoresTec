@@ -54,7 +54,12 @@ class App extends Component {
   handleLogin = () => {
     const auth = firebase.auth();
     auth.signInWithEmailAndPassword(this.state.email, this.state.password).then((response) => {
-      console.log(response);
+      const user = response.user;
+      const uid = user.uid;
+      firebase.database().ref(`/Usuarios/${uid}`).once('value').then((snapshot) => {
+        const username = snapshot.val() && snapshot.val().username;
+        alert("Hola " + username);
+      });
     }).catch((error) => {
       alert(error);
     });
