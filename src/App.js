@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import css from './App.css';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 class App extends Component {
@@ -75,19 +75,19 @@ class App extends Component {
   getAuthComponent = () => {
     if(this.state.action === "login"){
       return (        
-        <div className="AuthContainer">
-          <input placeholder="Correo" name="email" className="AuthComponent" onChange={this.handleChange} value={this.state.email}/>
-          <input placeholder="Contraseña" name="password" type="password" className="AuthComponent" onChange={this.handleChange} value={this.state.password}/>
+        <div className={css.AuthContainer}>
+          <input placeholder="Correo" name="email" className={css.AuthComponent} onChange={this.handleChange} value={this.state.email}/>
+          <input placeholder="Contraseña" name="password" type="password" className={css.AuthComponent} onChange={this.handleChange} value={this.state.password}/>
           <button onClick={this.handleLogin}>Ingresar</button>
           </div>
     );
     } else {
       return (
-        <div className="AuthContainer">
-        <input placeholder="Nombre" name="username" className="AuthComponent" onChange={this.handleChange} value={this.state.username}/>
-        <input placeholder="Correo" name="email" className="AuthComponent" onChange={this.handleChange} value={this.state.email}/>
-        <input placeholder="Contraseña" name="password" type="password" className="AuthComponent" onChange={this.handleChange} value={this.state.password}/>
-        <input placeholder="Confirmar Contraseña" type="password" className="AuthComponent"/>
+        <div className={css.AuthContainer}>
+        <input placeholder="Nombre" name="username" className={css.AuthComponent} onChange={this.handleChange} value={this.state.username}/>
+        <input placeholder="Correo" name="email" className={css.AuthComponent} onChange={this.handleChange} value={this.state.email}/>
+        <input placeholder="Contraseña" name="password" type="password" className={css.AuthComponent} onChange={this.handleChange} value={this.state.password}/>
+        <input placeholder="Confirmar Contraseña" type="password" className={css.AuthComponent}/>
         <form>
           <input type="radio" name="type" value="estudiante" />Estudiante
           <input type="radio" name="type" value="tutor" />Tutor
@@ -102,7 +102,7 @@ class App extends Component {
   render() {
 
     return (
-      <div className="App">
+      <div className={css.App}>
         <h1>Tutores Tec</h1>
         <h2>{this.state.action === "login" ? "Login" : "Sign Up"}</h2>
         {this.getAuthComponent()}
