@@ -5,6 +5,7 @@ import 'firebase/auth';
 import LoginComponent from './LoginComponent/LoginComponent';
 import SignUpComponent from './SignUpComponent/SignUpComponent';
 import Dashboard from './Dashboard/Dashboard';
+import Button from '@material-ui/core/Button';
 
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
@@ -83,9 +84,9 @@ class AppTest extends Component {
         return (
         <div className={css.App}>
             <h1>Tutores Tec</h1>
-            <div>
-                <button onClick={this.handleLoginPress}>Iniciar Sesion</button>
-                <button onClick={this.handleSignUpPress}>Registrarse</button>
+            <div className={css.test}>
+                <Button variant='outlined' color='primary' onClick={this.handleLoginPress}>Iniciar Sesion</Button>
+                <Button variant='outlined' color='secondary' onClick={this.handleSignUpPress}>Registrarse</Button>
             </div>
             {content}
         </div>
