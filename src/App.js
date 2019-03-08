@@ -28,18 +28,8 @@ class App extends Component {
     const auth = firebase.auth();
     const database = firebase.database();
     auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then((response) => {
-      console.log("Response: " + response);
-      console.log("Usuario: " + response.user);
       const user = response.user;
-      console.log("User ID: " + user.uid);
-      console.log("Username: " + this.state.username);
-      console.log("User email: " + user.email);
       const currUser = firebase.auth().currentUser;
-      if(currUser){
-        console.log("User logged in");
-      } else {
-        console.log("User not logged in");
-      }
       database.ref(`Usuarios/${user.uid}`).set({
         username:this.state.username,
         email: user.email
