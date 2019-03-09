@@ -2,105 +2,97 @@ import React, { Component } from 'react';
 import css from './App.css';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-class App extends Component {
+import LoginComponent from './LoginComponent/LoginComponent';
+import SignUpComponent from './SignUpComponent/SignUpComponent';
+import Dashboard from './Dashboard/Dashboard';
+import AuthComponent from './AuthComponent/AuthComponent.js';
 
-  constructor(props){
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-      confirmPassword: '',
-      action: "login",
-      username: ''
-    };
-  }
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
-  handleToggleAction = () => {
-    this.setState((prevState) => {
-      console.log(prevState);
-      return {
-        action: prevState.action === "login" ? "signup" : "login"
-      }
-    })
-  }
-
-  handleSignUp = () => {
-    const auth = firebase.auth();
-    const database = firebase.database();
-    auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then((response) => {
-      const user = response.user;
-      const currUser = firebase.auth().currentUser;
-      database.ref(`Usuarios/${user.uid}`).set({
-        username:this.state.username,
-        email: user.email
-      });
-    }).catch((error) => {
-      alert(error);
-    }).then(() => {
-
-    });
-  }
-
-  handleLogin = () => {
-    const auth = firebase.auth();
-    auth.signInWithEmailAndPassword(this.state.email, this.state.password).then((response) => {
-      const user = response.user;
-      const uid = user.uid;
-      firebase.database().ref(`/Usuarios/${uid}`).once('value').then((snapshot) => {
-        const username = snapshot.val() && snapshot.val().username;
-        alert("Hola " + username);
-      });
-    }).catch((error) => {
-      alert(error);
-    });
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
-
-  getAuthComponent = () => {
-    if(this.state.action === "login"){
-      return (        
-        <div className={css.AuthContainer}>
-          <input placeholder="Correo" name="email" className={css.AuthComponent} onChange={this.handleChange} value={this.state.email}/>
-          <input placeholder="Contraseña" name="password" type="password" className={css.AuthComponent} onChange={this.handleChange} value={this.state.password}/>
-          <button onClick={this.handleLogin}>Ingresar</button>
-          </div>
-    );
-    } else {
-      return (
-        <div className={css.AuthContainer}>
-        <input placeholder="Nombre" name="username" className={css.AuthComponent} onChange={this.handleChange} value={this.state.username}/>
-        <input placeholder="Correo" name="email" className={css.AuthComponent} onChange={this.handleChange} value={this.state.email}/>
-        <input placeholder="Contraseña" name="password" type="password" className={css.AuthComponent} onChange={this.handleChange} value={this.state.password}/>
-        <input placeholder="Confirmar Contraseña" type="password" className={css.AuthComponent}/>
-        <form>
-          <input type="radio" name="type" value="estudiante" />Estudiante
-          <input type="radio" name="type" value="tutor" />Tutor
-        </form>
-        <button onClick={this.handleSignUp}>Crear</button>
-      </div>
-      );
+class AppTest extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoggingIn: false,
+            isSigningUp: false,
+            user: null
+        }
     }
-  }
+
+    componentDidMount () {
+        if(firebase.auth().currentUser){
+            this.setState(prevState => {
+                return {
+                    ...prevState,
+                    user: firebase.auth().currentUser
+                }
+            })
+        } else {
+            console.log("User not logged in");
+        }
+    }
+
+    auth = () => {
+        if(firebase.auth().currentUser){
+            this.setState((prevState) => {
+                return {
+                    ...prevState,
+                    user: firebase.auth().currentUser
+                }
+            })
+        } else {
+            alert("Error signing in");
+        }
+    }
+
+    handleLoginPress = () => {
+        this.setState((prevState) => {
+            return {
+                ...prevState,
+                isSigningUp: false,
+                isLoggingIn: true
+            }
+        });
+    }
+
+    handleSignUpPress = () => {
+        this.setState((prevState) => {
+            return {
+                ...prevState,
+                isSigningUp: true,
+                isLoggingIn: false
+            }
+        });
+    }
+    
+    render() {
 
 
-  render() {
+        let content = null;
 
-    return (
-      <div className={css.App}>
-        <h1>Tutores Tec</h1>
-        <h2>{this.state.action === "login" ? "Login" : "Sign Up"}</h2>
-        {this.getAuthComponent()}
-        <button onClick={this.handleToggleAction}>{this.state.action === "login" ? "Crear Cuenta" : "Entrar a Cuenta"}</button>
-
+        if(this.state.user){
+            content = <Dashboard user={this.state.user}/>
+        } else {
+            let authComponent = null;
+            if(this.state.isLoggingIn){
+                authComponent = <LoginComponent auth={this.auth}/>
+            } else if(this.state.isSigningUp){
+                authComponent = <SignUpComponent auth={this.auth}/>
+            }
+            content = authComponent;
+        }
+        return (
+        <div className={css.App}>
+            {/* <h1>Tutores Tec</h1>
+            <div className={css.test}>
+                <Button variant='contained' color='primary' onClick={this.handleLoginPress}>Iniciar Sesion</Button>
+                <Button variant='contained' color='secondary' onClick={this.handleSignUpPress}>Registrarse</Button>
+            </div>
+            {content} */}
+            <AuthComponent/>
         </div>
-    );
-  }
+        );
+    }
 }
 
-export default App;
+export default AppTest;
