@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import css from './LoginComponent.css';
 import 'firebase/auth';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 class LoginComponent extends Component {
 
@@ -30,12 +35,18 @@ class LoginComponent extends Component {
 
     render () {
         return (
-            <div className={css.AuthContainer}>
-                <h1>Iniciar Sesión</h1>
-                <input placeholder="Correo" name="email" className={css.AuthComponent} onChange={this.handleChange} value={this.state.email}/>
-                <input placeholder="Contraseña" name="password" type="password" className={css.AuthComponent} onChange={this.handleChange} value={this.state.password}/>
-                <button onClick={this.handleLogin}>Ingresar</button>
-            </div>
+            // <div className={css.AuthContainer}>
+            //     <h1>Iniciar Sesión</h1>
+            //     <input placeholder="Correo" name="email" className={css.AuthComponent} onChange={this.handleChange} value={this.state.email}/>
+            //     <input placeholder="Contraseña" name="password" type="password" className={css.AuthComponent} onChange={this.handleChange} value={this.state.password}/>
+            //     <button onClick={this.handleLogin}>Ingresar</button>
+            // </div>
+            <Card className={css.Container} elevation={1} style={{backgroundColor: '#fcfcfc'}}>
+                    <h3>Iniciar Sesión</h3>
+                    <TextField className={css.textbox} label='Correo' type='email' variant='outlined'/>
+                    <TextField className={css.textbox} label='Contraseña' type='password' variant='outlined'/>
+                    <Button className={css.button} variant='outlined' color='primary'>Confirmar</Button>
+            </Card>
         )
     }
 }
