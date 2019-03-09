@@ -31,11 +31,11 @@
 
 .textbox {
     width: 90%;
-    margin: 3px !important;
+    margin: 8px !important;
 }
 
 .button {
     width: 50%;
-    margin-top: 8px !important;
-    margin-bottom: 14px !important;
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
 }
