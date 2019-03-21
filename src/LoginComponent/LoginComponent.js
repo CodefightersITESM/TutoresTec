@@ -43,9 +43,9 @@ class LoginComponent extends Component {
             // </div>
             <Card className={css.Container} elevation={1} style={{backgroundColor: '#fcfcfc'}}>
                     <h3>Iniciar Sesión</h3>
-                    <TextField className={css.textbox} label='Correo' type='email' variant='outlined'/>
-                    <TextField className={css.textbox} label='Contraseña' type='password' variant='outlined'/>
-                    <Button className={css.button} variant='outlined' color='primary'>Confirmar</Button>
+                    <TextField className={css.textbox} label='Correo' name='email' type='email' variant='outlined' onChange={this.handleChange} value={this.state.email}/>
+                    <TextField className={css.textbox} label='Contraseña' name='password' type='password' variant='outlined' onChange={this.handleChange} value={this.state.password}/>
+                    <Button onClick={this.handleLogin} className={css.button} variant='outlined' color='primary'>Confirmar</Button>
             </Card>
         )
     }
