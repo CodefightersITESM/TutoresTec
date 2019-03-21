@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import css from './SignUpComponent.css';
 import 'firebase/auth';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 class SignUpComponent extends Component {
 
@@ -19,6 +24,7 @@ class SignUpComponent extends Component {
     handleSignUp = () => {
         const auth = firebase.auth();
         const database = firebase.database();
+        alert(this.state.username);
         auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then((response) => {
           const user = response.user;
           database.ref(`Usuarios/${user.uid}`).set({
@@ -33,6 +39,7 @@ class SignUpComponent extends Component {
     }
 
     handleChange = (e) => {
+        console.log(e.target.value);
         this.setState({
           [e.target.name]: e.target.value
         })
@@ -40,18 +47,15 @@ class SignUpComponent extends Component {
 
     render () {
         return (
-            <div className={css.AuthContainer}>
-                <h1>Registro</h1>
-                <input placeholder="Nombre" name="username" className={css.AuthComponent} onChange={this.handleChange} value={this.state.username}/>
-                <input placeholder="Correo" name="email" className={css.AuthComponent} onChange={this.handleChange} value={this.state.email}/>
-                <input placeholder="Contraseña" name="password" type="password" className={css.AuthComponent} onChange={this.handleChange} value={this.state.password}/>
-                <input placeholder="Confirmar Contraseña" name="confirmPassword" type="password" className={css.AuthComponent} onChange={this.handleChange} value={this.state.confirmPassword}/>
-                <form>
-                    <input type="radio" name="type" value="estudiante" />Estudiante
-                    <input type="radio" name="type" value="tutor" />Tutor
-                </form>
-                <button onClick={this.handleSignUp}>Crear</button>
-            </div>
+           <Card className={css.Container} elevation={1} style={{backgroundColor: '#fcfcfc'}}>
+                <h3>Registro</h3>
+                <TextField className={css.textbox} label='Nombre' name='username' variant='outlined' onChange={this.handleChange} value={this.state.username}/>
+                <TextField className={css.textbox} label='Correo' name='email' variant='outlined' onChange={this.handleChange}/>
+                <TextField className={css.textbox} label='Contraseña' name='password' type='password' variant='outlined' onChange={this.handleChange}/>
+                <TextField className={css.textbox} label='Confirm Password' name='confirmPassword' type='password' variant='outlined' onChange={this.handleChange}/>
+
+                <Button onClick={this.handleSignUp} className={css.button} variant='outlined' color='primary'>Registrarse</Button>
+            </Card>
         )
     }
 

@@ -19,3 +19,22 @@
     display: inline-block;
     padding: 20;
   }
+
+  .Container {
+    display: flex;
+    flex-direction: column;
+    background-color: #cad5e0;
+    align-items: center;
+    min-width: 400px;
+}
+
+.textbox {
+    width: 90%;
+    margin: 8px !important;
+}
+
+.button {
+    width: 50%;
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+}
