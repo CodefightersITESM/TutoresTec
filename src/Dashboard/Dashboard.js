@@ -52,6 +52,7 @@ class Dashboard extends Component {
                     <Tab label="Asesorías" />
                     <Tab label="Tus Cursos" />
                     <Tab label="Tu perfil" />
+                    <Tab label="Mensajes" />
                     </Tabs>
                 </Paper>
             </div>
