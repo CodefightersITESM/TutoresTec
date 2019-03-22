@@ -1,0 +1,12 @@
+.Container {
+    background-color: bisque;
+    padding: 10px;
+    border-radius: 10px;
+    width: 90%;
+}
+
+.ProfilePicture {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}

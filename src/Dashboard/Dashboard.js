@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import css from './Dashboard.css';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import UserPad from './UserPad/UserPad';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+const styles = {
+    root: {
+      flexGrow: 1,
+    },
+};
 
 class Dashboard extends Component {
     constructor(props) {
@@ -29,13 +39,21 @@ class Dashboard extends Component {
     render () {
         return (
             <div className={css.Dashboard}>
-                <h1>Dashboard</h1>
-                <h2>Hola {this.state.name}</h2>
-                <hr></hr>
-                <button className={css.DashboardButton}>Perfil</button>
-                <button className={css.DashboardButton}>Tutores</button>
-                <button className={css.DashboardButton}>Estudiantes</button>
-                <button className={css.DashboardButton}>Material</button>
+                <UserPad user={this.state}/>
+                <Paper style={styles.root}>
+                    <Tabs
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    centered
+                    >
+                    <Tab label="Tus Tutores" />
+                    <Tab label="Asesorías" />
+                    <Tab label="Tus Cursos" />
+                    <Tab label="Tu perfil" />
+                    </Tabs>
+                </Paper>
             </div>
         )
     }

@@ -35,12 +35,7 @@ class LoginComponent extends Component {
 
     render () {
         return (
-            // <div className={css.AuthContainer}>
-            //     <h1>Iniciar Sesión</h1>
-            //     <input placeholder="Correo" name="email" className={css.AuthComponent} onChange={this.handleChange} value={this.state.email}/>
-            //     <input placeholder="Contraseña" name="password" type="password" className={css.AuthComponent} onChange={this.handleChange} value={this.state.password}/>
-            //     <button onClick={this.handleLogin}>Ingresar</button>
-            // </div>
+
             <Card className={css.Container} elevation={1} style={{backgroundColor: '#fcfcfc'}}>
                     <h3>Iniciar Sesión</h3>
                     <TextField className={css.textbox} label='Correo' name='email' type='email' variant='outlined' onChange={this.handleChange} value={this.state.email}/>

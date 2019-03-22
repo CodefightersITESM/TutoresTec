@@ -35,25 +35,12 @@ class AuthComponent extends React.Component {
     }
 
     auth = () => {
-        if(firebase.auth().currentUser){
-            this.setState((prevState) => {
-                return {
-                    ...prevState,
-                    user: firebase.auth().currentUser
-                }
-            })
-            alert("User logged in");
-        } else {
-            alert("Error signing in");
-        }
+        this.props.auth();
     }
 
     render() {
         return (
             <div className={css.AuthComponent}>
-                <AppBar position='fixed' color='primary'>
-                    <Toolbar />
-                </AppBar>
                 <div className={css.Container}>
                     <div className={css.left}>
                         <h1>TutoresTEC</h1>
